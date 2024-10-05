@@ -44,3 +44,36 @@ class Manager extends Employee {
         return `${super.getDetails()} and has a bonus of $${this.bonus}`;
     }
 }
+
+// Adding more methods to the Department class to handle bonuses
+
+class Department {
+    constructor(name) {
+        this.name = name;          
+        this.employees = [];     
+    }
+
+    // Method to add employees to the department
+    addEmployee(employee) {
+        this.employees.push(employee);
+    }
+
+    // Method to calculate the total salary of all employees in the department
+    getDepartmentSalary() {
+        // Sums up the base salaries of all employees using reduce
+        return this.employees.reduce((total, employee) => total + employee.salary, 0);
+    }
+
+    // Method to calculate total salary for the department including manager bonuses
+    calculateTotalSalaryWithBonus() {
+        return this.employees.reduce((total, employee) => {
+            // Check if the employee is an instance of the Manager class
+            if (employee instanceof Manager) {
+                // Add both salary and bonus to the total if the employee is a manager
+                return total + employee.salary + employee.bonus;
+            }
+            // Otherwise, just add the salary
+            return total + employee.salary;
+        }, 0);
+    }
+}
