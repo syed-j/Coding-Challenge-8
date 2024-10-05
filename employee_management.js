@@ -11,8 +11,6 @@ class Employee {
     }
 }
 
-
-
 class Department {
     constructor(name) {        // The constructor method initializes a new Department with a name and an empty array for employees
         this.name = name;          
@@ -33,3 +31,16 @@ class Department {
     }
 }
 
+// Defining the Manager class that extends (inherits from) the Employee class
+class Manager extends Employee {
+    constructor(name, salary, position, department, bonus) {   // The constructor method initializes a Manager with all Employee properties and an additional bonus
+        // Calling the parent Employee constructor using 'super' to inherit properties
+        super(name, salary, position, department);
+        this.bonus = bonus; // Additional property for the Manager class: bonus (number)
+    }
+
+    // Overriding the getDetails method to include bonus information for managers
+    getDetails() {
+        return `${super.getDetails()} and has a bonus of $${this.bonus}`;
+    }
+}
