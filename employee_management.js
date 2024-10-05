@@ -45,35 +45,53 @@ class Manager extends Employee {
     }
 }
 
-// Adding more methods to the Department class to handle bonuses
+// Extending the Department class with additional functionality to handle manager bonuses
+class Departments extends Department {
 
-class Department {
-    constructor(name) {
-        this.name = name;          
-        this.employees = [];     
-    }
-
-    // Method to add employees to the department
-    addEmployee(employee) {
-        this.employees.push(employee);
-    }
-
-    // Method to calculate the total salary of all employees in the department
-    getDepartmentSalary() {
-        // Sums up the base salaries of all employees using reduce
-        return this.employees.reduce((total, employee) => total + employee.salary, 0);
-    }
-
-    // Method to calculate total salary for the department including manager bonuses
     calculateTotalSalaryWithBonus() {
+        // Uses reduce to sum the salaries and bonuses of all employees
         return this.employees.reduce((total, employee) => {
-            // Check if the employee is an instance of the Manager class
+            // Checks if the employee is an instance of Manager to include their bonus
             if (employee instanceof Manager) {
-                // Add both salary and bonus to the total if the employee is a manager
+                // Adds both the salary and bonus if the employee is a manager
                 return total + employee.salary + employee.bonus;
             }
-            // Otherwise, just add the salary
+            // Adds only the salary if the employee is not a manager
             return total + employee.salary;
         }, 0);
     }
 }
+
+// Create an instance of the Departments class for the "Development" department
+const devDepartment = new Departments("Development");
+
+// Create an instance of the Departments class for the "Design" department
+const designDepartment = new Departments("Design");
+
+// Create new Employee objects for employees in the development and design departments
+const employee1 = new Employee("Alice", 70000, "Developer", "Development");   
+const employee2 = new Employee("Bob", 60000, "Designer", "Design");          
+
+// Create new Manager objects with an additional bonus property
+const manager1 = new Manager("Charlie", 90000, "Lead Developer", "Development", 15000);  
+const manager2 = new Manager("Diana", 80000, "Design Manager", "Design", 12000);        
+
+// Add employees and managers to the "Development" department
+devDepartment.addEmployee(employee1);  
+devDepartment.addEmployee(manager1);   
+
+// Add employees and managers to the "Design" department
+designDepartment.addEmployee(employee2);  
+designDepartment.addEmployee(manager2);   
+
+// Calculate and log the total salary of all employees in the "Development" department (without bonuses)
+console.log("Development Department Salary:", devDepartment.getDepartmentSalary()); 
+
+// Calculate and log the total salary of all employees in the "Design" department (without bonuses)
+console.log("Design Department Salary:", designDepartment.getDepartmentSalary());  
+
+// Calculate and log the total salary of all employees in the "Development" department, including bonuses
+console.log("Development Department Total Salary (with bonuses):", devDepartment.calculateTotalSalaryWithBonus());  
+
+// Calculate and log the total salary of all employees in the "Design" department, including bonuses
+console.log("Design Department Total Salary (with bonuses):", designDepartment.calculateTotalSalaryWithBonus());  
